@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import UserCard from './UserCard';
 import { getUsers } from '../../api';
-
+import './Loader.css'
 class UsersLoader extends Component {
   constructor (props) {
     super(props);
@@ -62,7 +62,7 @@ class UsersLoader extends Component {
 
     return (
       <div>
-        {isFetching && <div>Loading...</div>}
+        {isFetching ? <div class="loader">Loading...</div> :<div class="loader">Loading...</div> }
         {isError && <div>Some ERROR happening</div>}
         <h1>Users List</h1>
         <button onClick={this.prev}>Previous page</button>
