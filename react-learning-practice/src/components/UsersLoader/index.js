@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import UserCard from './UserCard';
+import UserList from './UserList';
 import { getUsers } from '../../api';
-import './Loader.css'
+import styles from './Loader.module.css';
+
 class UsersLoader extends Component {
   constructor (props) {
     super(props);
@@ -46,28 +48,20 @@ class UsersLoader extends Component {
   };
 
   componentDidUpdate (prevProps, prevState) {
-    const { page } = this.state;
+    const { page, filterInput } = this.state;
     if (prevState.page !== page) {
       this.load();
     }
   }
 
   render () {
-    console.log('render');
     const { isFetching, isError, users } = this.state;
-
-    const userList = users.map(user => (
-      <UserCard user={user} key={user.login.uuid} />
-    ));
 
     return (
       <div>
-        {isFetching ? <div class="loader">Loading...</div> :<div class="loader">Loading...</div> }
         {isError && <div>Some ERROR happening</div>}
-        <h1>Users List</h1>
-        <button onClick={this.prev}>Previous page</button>
-        <button onClick={this.next}>NextPage</button>
-        <ul>{userList}</ul>
+        {isFetching && <div className={styles.loader}>Loading...</div>}
+        <UserList users={users} prev={this.prev} next={this.next} />
       </div>
     );
   }
@@ -76,9 +70,16 @@ class UsersLoader extends Component {
 export default UsersLoader;
 
 /*
-
-Task 1. UserList - компонента, которая принимает массив и рендерит UserCard
-Task 2. Сделать красивые UserCard
+Task 1. UserList - компонента, которая 
+принимает массив и рендерить UserCard, передавая в них готовую разметку 
+(Например:
+  <UserCard>
+      <img />
+      <h3>{user.name} </h3>
+      <p>{user.email}</p>
+      <p>{your choise} </p>
+  </UserCard>
+  )
+Task 2. UserCard - просто контейнер для карточки юзера
 Task 3. Spinner во время Loading
-
 */
