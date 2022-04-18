@@ -39,7 +39,7 @@ class UsersLoader extends Component {
         });
       });
   };
-
+ 
   prev = () => {
     this.setState(({ page }) => ({ page: page - 1 }));
   };
